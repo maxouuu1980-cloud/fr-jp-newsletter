@@ -1,0 +1,36 @@
+[ai]
+openai_api_key = "sk-..."
+openai_model = "gpt-4o-mini"
+deepl_api_key = "DEEPL-..."
+use_deepl_for_translation = true
+
+[content]
+rss_feeds = [
+  "https://www.timeout.com/paris/en/restaurants?format=rss",
+  "https://www.japantimes.co.jp/life/food/feed/",
+  "https://www.timeout.com/tokyo/restaurants?format=rss"
+]
+items_per_theme = 4
+themes = ["gastronomie", "artisanat", "design durable"]
+
+[content.unsplash_queries]
+gastronomie = ["kaiseki","french bistro","sake tasting","washoku"]
+artisanat = ["ceramics","woodworking Japan","wasai sewing"]
+"design durable" = ["recycled materials","upcycling","atelier design"]
+
+[apis]
+google_maps_api_key = "AIzaSy..."
+unsplash_access_key = "UNSPLASH-ACCESS-KEY"
+
+[email]
+substack_post_email = "your-blog+xyz@substack.com"
+smtp_host = "smtp.gmail.com"
+smtp_port = 587
+smtp_user = "you@example.com"
+smtp_pass = "your-app-password"
+from_email = "you@example.com"
+
+[run]
+output_dir = "out"
+subject_prefix = "[FR–JP Media] "
+send_email = false

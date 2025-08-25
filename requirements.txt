@@ -1,0 +1,8 @@
+openai>=1.50.0
+deepl>=1.16.1
+feedparser>=6.0.11
+jinja2>=3.1.4
+requests>=2.32.3
+python-dateutil>=2.9.0.post0
+toml>=0.10.2
+tenacity>=9.0.0
