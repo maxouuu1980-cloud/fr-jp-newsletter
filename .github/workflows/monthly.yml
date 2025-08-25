@@ -25,6 +25,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Install Playwright
+        run: |
+          pip install playwright==1.47.0
+          playwright install --with-deps chromium
+
       - name: Collect sources
         run: |
           mkdir -p data
@@ -37,10 +42,13 @@ jobs:
         run: |
           python -m src.generate_issue "$DATA_JSON" out
 
-      - name: Publish to Substack (create draft)
+      - name: Publish to Substack via Playwright (full auto)
         env:
           SUBSTACK_BASE_URL: ${{ secrets.SUBSTACK_BASE_URL }}
           SUBSTACK_EMAIL: ${{ secrets.SUBSTACK_EMAIL }}
           SUBSTACK_PASSWORD: ${{ secrets.SUBSTACK_PASSWORD }}
+        run: |
+          python publish_via_playwright.py out/newsletter_post.html "Art de Vivre Durable — $(date +'%B %Y')" "${{ env.SUBSTACK_STATUS }}"
+
         run: |
           python -m src.publish_substack out/newsletter_post.html "Art de Vivre Durable — $(date +'%B %Y')" "${{ env.SUBSTACK_STATUS }}"
