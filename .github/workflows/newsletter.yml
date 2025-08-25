@@ -2,9 +2,9 @@ name: Monthly FR-JP Newsletter
 
 on:
   schedule:
-    # ⚠ GitHub Actions est en UTC : ici le 1er de chaque mois à 08:00 UTC
+    # ⚠️ UTC : ici, le 1er de chaque mois à 08:00 UTC (≈ 09:00 Paris en été / 10:00 en hiver)
     - cron: '0 8 1 * *'
-  workflow_dispatch: {}  # bouton Run workflow pour tester
+  workflow_dispatch: {}  # Permet de lancer à la main pour tester
 
 jobs:
   build-and-send:
@@ -12,7 +12,8 @@ jobs:
     env:
       TZ: Europe/Paris
       OUTPUT_DIR: out
-      SEND_EMAIL: "false"  # commence par false pour un dry-run
+      SEND_EMAIL: "true"   # "false" = dry-run (génère le HTML mais n’envoie pas à Substack)
+      MISTRAL_MODEL: mistral-large-latest  # ou mistral-small-latest / ministral-8b-latest, etc.
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -26,17 +27,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r auto_newsletter_pack/requirements.txt
+          # SDK Mistral (au lieu d'OpenAI)
+          pip install mistralai==1.*  # ou la version stable courante
 
-      - name: Generate config.toml from secrets
+      - name: Generate config.toml (Mistral provider)
         run: |
           cat > auto_newsletter_pack/config.toml <<'EOF'
           [ai]
-          openai_api_key = "${{ secrets.OPENAI_API_KEY }}"
-          openai_model = "gpt-4o-mini"
-          deepl_api_key = "${{ secrets.DEEPL_API_KEY }}"
+          # Utilisation de Mistral AI (pas d'OpenAI ici)
+          mistral_api_key = "${{ secrets.MISTRAL_API_KEY }}"
+          mistral_model   = "${{ env.MISTRAL_MODEL }}"
+          # Si ton script garde une option de fallback, force-la côté Mistral
           use_deepl_for_translation = true
 
           [content]
+          # Personnalise tes flux FR/JP
           rss_feeds = [
             "https://www.timeout.com/paris/en/restaurants?format=rss",
             "https://www.japantimes.co.jp/life/food/feed/",
@@ -52,10 +57,10 @@ jobs:
 
           [apis]
           google_maps_api_key = ""  # optionnel
-          unsplash_access_key = "${{ secrets.UNSPLASH_ACCESS_KEY }}"
+          unsplash_access_key = "${{ secrets.UNSPLASH_ACCESS_KEY }}"  # optionnel
 
           [email]
-          substack_post_email = "${{ secrets.SUBSTACK_POST_EMAIL }}"
+          substack_post_email = "${{ secrets.SUBSTACK_SUBMIT_EMAIL }}"  # adresse secrète Email-to-Post
           smtp_host = "${{ secrets.SMTP_HOST }}"
           smtp_port = 587
           smtp_user = "${{ secrets.SMTP_USER }}"
@@ -68,7 +73,7 @@ jobs:
           send_email = ${SEND_EMAIL}
           EOF
 
-      - name: Run generator
+      - name: Run generator (Mistral)
         working-directory: auto_newsletter_pack
         run: |
           python generate_newsletter.py --config config.toml
