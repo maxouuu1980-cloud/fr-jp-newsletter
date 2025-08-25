@@ -49,6 +49,3 @@ jobs:
           SUBSTACK_PASSWORD: ${{ secrets.SUBSTACK_PASSWORD }}
         run: |
           python publish_via_playwright.py out/newsletter_post.html "Art de Vivre Durable — $(date +'%B %Y')" "${{ env.SUBSTACK_STATUS }}"
-
-        run: |
-          python -m src.publish_substack out/newsletter_post.html "Art de Vivre Durable — $(date +'%B %Y')" "${{ env.SUBSTACK_STATUS }}"
