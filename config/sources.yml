@@ -1,15 +1,17 @@
+# config/sources.yml
 feeds:
   gastronomy:
-    - https://www.japantimes.co.jp/life/food/feed/           # Japan Times (Food)
-    - https://www.timeout.com/tokyo/restaurants/rss          # TimeOut Tokyo RESTAURANTS (flux section)
-    - https://omakase-tour.com/en/blog/feed/                 # Blog EN (gastronomie/visites culinaire)
+    - https://www.japantimes.co.jp/life/food/feed/         # Japan Times - Food (OK)
+    - https://www.savorjapan.com/contents/feed/            # Savor Japan (mag / restos, en)
+    - https://gurunavi.com/en/feed/                        # Gurunavi English (sélection éditoriale, en)
+    - https://www.tokyoweekender.com/feed/                 # Tokyo Weekender (lifestyle/food, en)
 
   craft_design:
-    - https://www.dezeen.com/tag/japan/feed/                 # Dezeen - tag Japan
-    - https://www.spoon-tamago.com/feed/                     # Spoon & Tamago (art/design japonais)
-    - https://www.designboom.com/tag/japan/feed/             # designboom - tag Japan
+    - https://www.dezeen.com/tag/japan/feed/               # Dezeen - tag Japan (OK)
+    - https://www.designboom.com/tag/japan/feed/           # designboom - tag Japan (OK)
+    - https://spoon-tamago.com/feed/                       # Spoon & Tamago (OK)
 
   sustainability:
-    - https://asia.nikkei.com/rss                            # Nikkei Asia (business/industrie, contient Japon)
-    - https://www3.nhk.or.jp/nhkworld/en/news/rss/           # NHK World (news globales, fiable)
-    - https://www.japantimes.co.jp/business/feed/            # JT Business (souvent GX/industrie)
+    - https://www.japantimes.co.jp/business/feed/          # JT Business (OK)
+    - https://www.asahi.com/rss/asahi/newsheadlines.rdf    # Asahi (JP, général : ajoute de la matière)
+    - https://www.asahi.com/rss/asahi/eco.rdf              # Asahi Environnement/Énergie (JP)
