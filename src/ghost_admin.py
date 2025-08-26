@@ -23,6 +23,7 @@ def create_post(html: str, title: str, tags=None, status='draft', send_email=Fal
     url = f'{admin_url}/ghost/api/admin/posts/'
     # ✅ IMPORTANT : passer source=html en QUERY, pas dans le body
     params = {'source': 'html'}
+    r = requests.post(url, headers=headers, params=params, json=body, timeout=30)
 
     # Si tu veux déclencher l’email à la publication, on ajoutera le param newsletter au moment du PUT publish
     if send_email and newsletter_slug:
