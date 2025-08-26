@@ -6,14 +6,33 @@ from .mistral_gen import generate_sections
 from .ghost_admin import create_post, publish_post
 
 def render_html(sections, month_tag):
-    env = Environment(loader=FileSystemLoader('templates'), autoescape=select_autoescape())
-    tmpl = env.get_template('newsletter.html.j2')
+    template_dir = os.getenv("TEMPLATE_DIR", "templates")
+    env = Environment(
+        loader=FileSystemLoader(template_dir),
+        autoescape=select_autoescape()
+    )
+    print(f"[build] Loading template from: {template_dir}/newsletter.html.j2")
+    tmpl = env.get_template("newsletter.html.j2")
+
+    # URLs injectées depuis les variables d'env (voir B)
+    cta_subscribe_url = os.getenv("CTA_SUBSCRIBE_URL") or "/subscribe/"
+    legal_url         = os.getenv("LEGAL_URL") or "/mentions-legales"
+    mymaps_url        = os.getenv("MYMAPS_EMBED_URL")  # peut rester None
+
     return tmpl.render(
-        title=f'Art de Vivre Durable – FR・JP — {month_tag}',
+        title=f"Art de Vivre Durable – FR・JP — {month_tag}",
         sections=sections,
         period=month_tag,
-        generated_at=datetime.utcnow().isoformat() + 'Z',
-        now=datetime.utcnow()  # ✅ on passe "now" au template
+        generated_at=datetime.utcnow().isoformat() + "Z",
+        now=datetime.utcnow(),
+        # valeurs pour le template :
+        cta_subscribe_url=cta_subscribe_url,
+        legal_url=legal_url,
+        mymaps_embed_url=mymaps_url,
+        # header (facultatif)
+        pill_text="Newsletter",
+        heading="Art de Vivre Durable – FR・JP",
+        subheading="Gastronomie・Artisanat・Design・Voyages curated",
     )
 
 def main():
