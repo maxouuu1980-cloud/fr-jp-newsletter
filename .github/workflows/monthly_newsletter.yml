@@ -22,6 +22,9 @@ jobs:
           GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
           GHOST_NEWSLETTER_SLUG: ${{ secrets.GHOST_NEWSLETTER_SLUG }}
           PUBLISH_MODE: ${{ secrets.PUBLISH_MODE }}
+          HTTP_TIMEOUT: "20"
+          HTTP_RETRIES: "5"
+          HTTP_BACKOFF: "0.8"
         run: |
           python -m src.build --month "$(date -u +%Y-%m)"
       - name: Upload artifact
