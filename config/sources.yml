@@ -1,15 +1,15 @@
 feeds:
   gastronomy:
-    - https://www.japantimes.co.jp/life/food/feed/        # Japan Times - Food
-    - https://www.timeout.com/japan/tokyo/restaurants/rss # TimeOut Japan (section RESTAURANTS, flux OK)
-    - https://tokyocheapo.com/feed/                        # Tokyo Cheapo (lifestyle/food)
+    - https://www.japantimes.co.jp/life/food/feed/           # Japan Times (Food)
+    - https://www.timeout.com/tokyo/restaurants/rss          # TimeOut Tokyo RESTAURANTS (flux section)
+    - https://omakase-tour.com/en/blog/feed/                 # Blog EN (gastronomie/visites culinaire)
 
   craft_design:
-    - https://www.dezeen.com/tag/japan/feed/               # Dezeen - tag Japan
-    - https://www.spoon-tamago.com/feed/                   # Spoon & Tamago (art/design japonais)
-    - https://www.core77.com/rss                           # Core77 (design)
+    - https://www.dezeen.com/tag/japan/feed/                 # Dezeen - tag Japan
+    - https://www.spoon-tamago.com/feed/                     # Spoon & Tamago (art/design japonais)
+    - https://www.designboom.com/tag/japan/feed/             # designboom - tag Japan
 
   sustainability:
-    - https://www.japantimes.co.jp/business/feed/          # JT Business (souvent GX/industrie)
-    - https://www.meti.go.jp/english/rss/whatsnew.xml      # METI RSS (plus fiable que l’Atom qui time-out)
-    - https://www.jetro.go.jp/biznews/english/rss.xml      # JETRO business news
+    - https://asia.nikkei.com/rss                            # Nikkei Asia (business/industrie, contient Japon)
+    - https://www3.nhk.or.jp/nhkworld/en/news/rss/           # NHK World (news globales, fiable)
+    - https://www.japantimes.co.jp/business/feed/            # JT Business (souvent GX/industrie)
