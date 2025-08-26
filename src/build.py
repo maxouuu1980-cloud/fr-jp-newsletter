@@ -12,7 +12,8 @@ def render_html(sections, month_tag):
         title=f'Art de Vivre Durable – FR・JP — {month_tag}',
         sections=sections,
         period=month_tag,
-        generated_at=datetime.utcnow().isoformat() + 'Z'
+        generated_at=datetime.utcnow().isoformat() + 'Z',
+        now=datetime.utcnow()  # ✅ on passe "now" au template
     )
 
 def main():
