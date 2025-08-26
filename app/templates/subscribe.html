@@ -1,0 +1,12 @@
+<!doctype html>
+<title>S’abonner</title>
+<link rel="stylesheet" href="https://unpkg.com/sakura.css/css/sakura.css">
+<h1>S’abonner</h1>
+{% if error %}<p style="color:red">{{ error }}</p>{% endif %}
+{% if price_id %}
+<form action="/create-checkout-session" method="post">
+  <button type="submit">S’abonner (Stripe)</button>
+</form>
+{% else %}
+<p>Configurez STRIPE_SECRET_KEY et STRIPE_PRICE_ID.</p>
+{% endif %}
