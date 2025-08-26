@@ -1,0 +1,10 @@
+feeds:
+  gastronomy:
+    - https://japanbyfood.com/blog/rss
+    - https://www.timeout.com/tokyo/restaurants/rss
+  craft_design:
+    - https://www.japandesign.ne.jp/en/feed/
+    - https://www.dezeen.com/tag/japan/feed/
+  sustainability:
+    - https://www.jetro.go.jp/en/reports/atom.xml
+    - https://www.meti.go.jp/english/whatsnew/atom.xml
