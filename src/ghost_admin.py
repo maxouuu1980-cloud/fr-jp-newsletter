@@ -19,23 +19,32 @@ def create_post(html: str, title: str, tags=None, status='draft', send_email=Fal
         'Accept-Version': version,
         'Content-Type': 'application/json'
     }
+
     url = f'{admin_url}/ghost/api/admin/posts/'
-    params = {}
+    # ✅ IMPORTANT : passer source=html en QUERY, pas dans le body
+    params = {'source': 'html'}
+
+    # Si tu veux déclencher l’email à la publication, on ajoutera le param newsletter au moment du PUT publish
     if send_email and newsletter_slug:
-        params['newsletter'] = newsletter_slug
-    body = {'posts': [{
-        'title': title,
-        'slug': make_slug(title),
-        'html': html,
-        'source': 'html',
-        'status': status,
-        'tags': [{'name': t} for t in (tags or [])],
-    }]}
+        # on ne l'utilise qu'au publish, pas ici — on laisse tel quel
+        pass
+
+    body = {
+        'posts': [{
+            'title': title,
+            'slug': make_slug(title),
+            'html': html,
+            'status': status,
+            'tags': [{'name': t} for t in (tags or [])],
+        }]
+    }
     if feature_image:
         body['posts'][0]['feature_image'] = feature_image
+
     r = requests.post(url, headers=headers, params=params, json=body, timeout=30)
     r.raise_for_status()
-    return r.json()['posts'][0]
+    post = r.json()['posts'][0]
+    return post
 
 def publish_post(post_id: str, updated_at: str, send_email=False, newsletter_slug=None, email_only=False):
     admin_url = os.environ['GHOST_ADMIN_URL'].rstrip('/')
