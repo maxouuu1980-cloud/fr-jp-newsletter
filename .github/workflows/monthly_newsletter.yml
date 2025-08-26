@@ -1,0 +1,31 @@
+name: Monthly FR–JP Newsletter
+on:
+  schedule:
+    - cron: '30 7 1 * *'
+  workflow_dispatch: {}
+jobs:
+  build-and-post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Generate & Post
+        env:
+          MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
+          GHOST_ADMIN_URL: ${{ secrets.GHOST_ADMIN_URL }}
+          GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
+          GHOST_NEWSLETTER_SLUG: ${{ secrets.GHOST_NEWSLETTER_SLUG }}
+          PUBLISH_MODE: ${{ secrets.PUBLISH_MODE }}
+        run: |
+          python -m src.build --month "$(date -u +%Y-%m)"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: newsletter
+          path: output/*.html
