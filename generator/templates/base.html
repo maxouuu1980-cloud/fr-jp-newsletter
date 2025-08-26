@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <style>
+    body {font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; background:#f6f7fb; margin:0; padding:0;}
+    .container {max-width: 780px; margin: 20px auto; background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.06);}
+    header {background:#0f172a; color:#fff; padding:28px}
+    header h1 {margin:0 0 6px; font-size:28px}
+    header p {margin:0; opacity:.9}
+    .content {padding:24px 28px}
+    h2 {margin-top:0}
+    .kicker {text-transform:uppercase; color:#64748b; font-size:12px; letter-spacing:.06em; margin:12px 0 6px;}
+    .card {background:#f9fafb; border:1px solid #eef2f7; border-radius:12px; padding:16px; margin:12px 0;}
+    .meta {color:#374151; font-size:14px}
+    .two {display:grid; grid-template-columns:1fr 1fr; gap:16px}
+    iframe {width:100%; min-height: 360px; border:0; border-radius:12px}
+    footer {padding:24px; text-align:center; color:#64748b; font-size:12px}
+    .jp {font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif;}
+    .btn {display:inline-block; padding:10px 14px; background:#0ea5e9; color:#fff; border-radius:10px; text-decoration:none; font-weight:700}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Art de Vivre Durable – FR・JP</h1>
+      <p>{{ subtitle }}</p>
+    </header>
+    <div class="content">
+      {% block body %}{% endblock %}
+    </div>
+    <footer>
+      © {{ year }} Art de Vivre Durable FR–JP — Numéro du {{ date_str }}
+    </footer>
+  </div>
+</body>
+</html>
