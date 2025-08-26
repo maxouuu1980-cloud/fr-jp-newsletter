@@ -1,10 +1,15 @@
 feeds:
   gastronomy:
-    - https://japanbyfood.com/blog/rss
-    - https://www.timeout.com/tokyo/restaurants/rss
+    - https://www.japantimes.co.jp/life/food/feed/        # Japan Times - Food
+    - https://www.timeout.com/japan/tokyo/restaurants/rss # TimeOut Japan (section RESTAURANTS, flux OK)
+    - https://tokyocheapo.com/feed/                        # Tokyo Cheapo (lifestyle/food)
+
   craft_design:
-    - https://www.japandesign.ne.jp/en/feed/
-    - https://www.dezeen.com/tag/japan/feed/
+    - https://www.dezeen.com/tag/japan/feed/               # Dezeen - tag Japan
+    - https://www.spoon-tamago.com/feed/                   # Spoon & Tamago (art/design japonais)
+    - https://www.core77.com/rss                           # Core77 (design)
+
   sustainability:
-    - https://www.jetro.go.jp/en/reports/atom.xml
-    - https://www.meti.go.jp/english/whatsnew/atom.xml
+    - https://www.japantimes.co.jp/business/feed/          # JT Business (souvent GX/industrie)
+    - https://www.meti.go.jp/english/rss/whatsnew.xml      # METI RSS (plus fiable que l’Atom qui time-out)
+    - https://www.jetro.go.jp/biznews/english/rss.xml      # JETRO business news
