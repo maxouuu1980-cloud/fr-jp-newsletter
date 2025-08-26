@@ -1,17 +1,14 @@
 # config/sources.yml
 feeds:
   gastronomy:
-    - https://www.japantimes.co.jp/life/food/feed/         # Japan Times - Food (OK)
-    - https://www.savorjapan.com/contents/feed/            # Savor Japan (mag / restos, en)
-    - https://gurunavi.com/en/feed/                        # Gurunavi English (sélection éditoriale, en)
-    - https://www.tokyoweekender.com/feed/                 # Tokyo Weekender (lifestyle/food, en)
-
+    - https://www.japantimes.co.jp/life/food/feed/
+    - https://www.tokyoweekender.com/feed/
+    - https://news.google.com/rss/search?q=tokyo+restaurant+site:japantimes.co.jp
   craft_design:
-    - https://www.dezeen.com/tag/japan/feed/               # Dezeen - tag Japan (OK)
-    - https://www.designboom.com/tag/japan/feed/           # designboom - tag Japan (OK)
-    - https://spoon-tamago.com/feed/                       # Spoon & Tamago (OK)
-
+    - https://www.dezeen.com/tag/japan/feed/
+    - https://spoon-tamago.com/feed/
+    - https://www.designboom.com/tag/japan/feed/
   sustainability:
-    - https://www.japantimes.co.jp/business/feed/          # JT Business (OK)
-    - https://www.asahi.com/rss/asahi/newsheadlines.rdf    # Asahi (JP, général : ajoute de la matière)
-    - https://www.asahi.com/rss/asahi/eco.rdf              # Asahi Environnement/Énergie (JP)
+    - https://www.japantimes.co.jp/business/feed/
+    - https://www.asahi.com/rss/asahi/eco.rdf
+    - https://news.google.com/rss/search?q=Japan+green+tech+OR+GX+OR+renewables
