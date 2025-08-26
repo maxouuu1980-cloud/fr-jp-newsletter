@@ -23,7 +23,7 @@ def main():
 
     items = fetch_recent()
     if not items:
-        print('No recent items found. Exiting.')
+        print('Warning: no recent items found — proceeding with empty set (fallback content).')
         return
 
     sections = generate_sections(items)
