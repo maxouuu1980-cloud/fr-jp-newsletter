@@ -26,6 +26,7 @@ jobs:
         env:
           MISTRAL_API_KEY: ${{ secrets.MISTRAL_API_KEY }}
           MISTRAL_MODEL: mistral-large-latest
+          MISTRAL_MODEL_FALLBACK: open-mixtral-8x7b, ministral-8b-latest
           MAPS_EMBED_URL: ${{ secrets.MAPS_EMBED_URL }}
         run: |
           python generator/generate_newsletter.py
