@@ -2,7 +2,7 @@ import os, json, datetime, pathlib
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from mistralai import Mistral
 
-MODEL = os.getenv("MISTRAL_MODEL", "mistral-large-latest")
+MODEL = os.getenv("MISTRAL_MODEL", "open-mixtral-8x7b")
 API_KEY = os.getenv("MISTRAL_API_KEY")
 MAPS_EMBED_URL = os.getenv("MAPS_EMBED_URL", "")
 
