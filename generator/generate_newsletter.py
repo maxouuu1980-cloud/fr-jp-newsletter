@@ -1,6 +1,6 @@
 import os, json, datetime, pathlib
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from mistralai.client import MistralClient
+from mistralai import Mistral
 
 MODEL = os.getenv("MISTRAL_MODEL", "mistral-large-latest")
 API_KEY = os.getenv("MISTRAL_API_KEY")
@@ -17,8 +17,8 @@ client = MistralClient(api_key=API_KEY)
 env = Environment(loader=FileSystemLoader(str(TEMPLATES)), autoescape=select_autoescape(["html","xml"]))
 
 def llm(prompt: str) -> str:
-    """Appel simple au chat Mistral (messages en dicts)"""
-    resp = client.chat(
+    """Appel simple au chat Mistral (nouvelle API 1.x)"""
+    resp = client.chat.complete(
         model=MODEL,
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7,
