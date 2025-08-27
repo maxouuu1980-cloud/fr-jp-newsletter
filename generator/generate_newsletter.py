@@ -13,7 +13,7 @@ SITE = ROOT / "site"
 if not API_KEY:
     raise SystemExit("Missing MISTRAL_API_KEY")
 
-client = MistralClient(api_key=API_KEY)
+client = Mistral(api_key=API_KEY)
 env = Environment(loader=FileSystemLoader(str(TEMPLATES)), autoescape=select_autoescape(["html","xml"]))
 
 def llm(prompt: str) -> str:
