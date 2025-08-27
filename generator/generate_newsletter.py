@@ -1,6 +1,7 @@
 import os, json, datetime, pathlib
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from mistralai import Mistral
+from mistralai.client import MistralClient
+from mistralai.models.chat_completion import ChatMessag
 
 MODEL = os.getenv("MISTRAL_MODEL", "mistral-large-latest")
 API_KEY = os.getenv("MISTRAL_API_KEY")
@@ -13,11 +14,11 @@ SITE = ROOT / "site"
 if not API_KEY:
     raise SystemExit("Missing MISTRAL_API_KEY")
 
-client = Mistral(api_key=API_KEY)
+client = MistralClient(api_key=API_KEY)
 env = Environment(loader=FileSystemLoader(str(TEMPLATES)), autoescape=select_autoescape(["html","xml"]))
 
-def llm(prompt:str)->str:
-    resp = client.chat.complete(model=MODEL, messages=[{"role":"user","content":prompt}], temperature=0.7, max_tokens=1200)
+def llm(prompt: str) -> str:
+resp = client.chat(model=MODEL, messages=[ChatMessage(role="user", content=prompt)], temperature=0.7, max_tokens=1200,)
     return resp.choices[0].message.content
 
 def gen_section(city_hint, category, url_hint):
