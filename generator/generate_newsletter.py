@@ -3,6 +3,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from mistralai import Mistral
 
 MODEL = os.getenv("MISTRAL_MODEL", "mistral-large-latest")
+FALLBACKS = [m.strip() for m in os.getenv("MISTRAL_MODEL_FALLBACK", "open-mixtral-8x7b,ministral-8b-latest").split(",") if m.strip()]
 API_KEY = os.getenv("MISTRAL_API_KEY")
 MAPS_EMBED_URL = os.getenv("MAPS_EMBED_URL", "")
 
@@ -16,15 +17,45 @@ if not API_KEY:
 client = Mistral(api_key=API_KEY)
 env = Environment(loader=FileSystemLoader(str(TEMPLATES)), autoescape=select_autoescape(["html","xml"]))
 
-def llm(prompt: str) -> str:
-    """Appel simple au chat Mistral (nouvelle API 1.x)"""
+def _call_llm_once(model: str, prompt: str, temperature: float = 0.7, max_tokens: int = 900) -> str:
     resp = client.chat.complete(
-        model=MODEL,
+        model=model,
         messages=[{"role": "user", "content": prompt}],
-        temperature=0.7,
-        max_tokens=1200,
+        temperature=temperature,
+        max_tokens=max_tokens,
     )
     return resp.choices[0].message.content
+
+def llm(prompt: str) -> str:
+    """
+    Appel Mistral avec retries + fallbacks (tous services Mistral).
+    Gère les erreurs 429 capacity/rate limit et autres erreurs transitoires.
+    """
+    models_to_try = [MODEL] + FALLBACKS
+    last_err = None
+    for model in models_to_try:
+        # 5 tentatives par modèle avec backoff exponentiel + jitter
+        for attempt in range(5):
+            try:
+                return _call_llm_once(model, prompt, temperature=0.7, max_tokens=900)
+            except Exception as e:
+                msg = str(e).lower()
+                # 429 / capacity / rate limit → retry
+                is_capacity = ("429" in msg) or ("capacity" in msg) or ("rate limit" in msg) or ("service_tier_capacity_exceeded" in msg)
+                # autres erreurs réseau transitoires possibles → retry léger
+                is_transient = any(k in msg for k in ["timeout", "temporarily", "unavailable", "connection reset"])
+                if is_capacity or is_transient:
+                    sleep_s = min(60, (2 ** attempt) + random.uniform(0, 1.0))
+                    time.sleep(sleep_s)
+                    continue
+                # sinon on arrête ce modèle et on essaie le suivant
+                last_err = e
+                break
+        # si on arrive ici, ce modèle n'a pas abouti → on tente le suivant
+        last_err = last_err or Exception(f"Echec sur modèle {model}")
+        continue
+    # Tous les modèles ont échoué
+    raise last_err or Exception("Mistral: impossible d'obtenir une réponse après retries.")
 
 def gen_section(city_hint, category, url_hint):
     prompt = f"""
